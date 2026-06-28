@@ -1,17 +1,21 @@
 # AI Change Audit
 
-Generated: 2026-06-28T13:11:23.858Z
-Task: ignore own audit artifacts
-Baseline: 2b02a2b60b9d9de6056ce0450e7443c88a105b81 (main)
+Generated: 2026-06-28T13:13:12.018Z
+Task: include committed changes after baseline
+Baseline: 4684913559381eeee0ef8a761dc490649e0eec4d (main)
 
 ## Summary
 
-- Changed files: 3
+- Changed files: 2
 - High-risk files: 0
 - Medium-risk files: 0
 - Failed commands: 0
 - Potential secret findings: 0
 - Large changes: 0
+
+## Commits Since Baseline
+
+No commits were created after the baseline.
 
 ## Review Focus
 
@@ -21,7 +25,6 @@ Baseline: 2b02a2b60b9d9de6056ce0450e7443c88a105b81 (main)
 
 | Risk | Status | File | Reason |
 | --- | --- | --- | --- |
-| LOW | M | `README.md` | Documentation changed. |
 | LOW | M | `bin/agent-change-auditor.cjs` | General source or asset change. |
 | LOW | M | `scripts/smoke-test.cjs` | General source or asset change. |
 
@@ -33,7 +36,7 @@ No dependency additions or removals detected in package manifests.
 
 | Exit | Command | Started |
 | --- | --- | --- |
-| 0 | `npm run check` | 2026-06-28T13:11:22.055Z |
+| 0 | `npm run check` | 2026-06-28T13:13:09.728Z |
 
 ## Potential Secrets
 

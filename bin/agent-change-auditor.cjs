@@ -128,12 +128,12 @@ function finish(args) {
   if (opts.test) runAndRecord(opts.test, "test");
   if (opts.build) runAndRecord(opts.build, "build");
 
-  const diffRaw = git(["diff", "--binary"]);
+  const diffRaw = collectDiff(baseline);
   const diff = redact(diffRaw);
   fs.writeFileSync(auditPath(PATCH_FILE), diff);
 
-  const changedFiles = parseChangedFiles();
-  const stats = parseNumstat();
+  const changedFiles = parseChangedFiles(baseline);
+  const stats = parseNumstat(baseline);
   const findings = analyze({
     baseline,
     changedFiles,
@@ -194,7 +194,8 @@ function analyze(input) {
     },
     current: {
       head: safeGit(["rev-parse", "HEAD"]).trim(),
-      status: git(["status", "--short"])
+      status: git(["status", "--short"]),
+      commitsSinceBaseline: listCommitsSince(input.baseline.head)
     },
     summary: {
       changedFileCount: changedFiles.length,
@@ -230,6 +231,17 @@ function renderReport(findings) {
   lines.push(`- Failed commands: ${findings.summary.failedCommandCount}`);
   lines.push(`- Potential secret findings: ${findings.summary.sensitiveFindingCount}`);
   lines.push(`- Large changes: ${findings.summary.largeChangeCount}`);
+  lines.push("");
+
+  lines.push("## Commits Since Baseline");
+  lines.push("");
+  if (!findings.current.commitsSinceBaseline.length) {
+    lines.push("No commits were created after the baseline.");
+  } else {
+    for (const commit of findings.current.commitsSinceBaseline) {
+      lines.push(`- ${commit}`);
+    }
+  }
   lines.push("");
 
   lines.push("## Review Focus");
@@ -336,9 +348,16 @@ function redact(text) {
   return result;
 }
 
-function parseChangedFiles() {
-  const output = git(["status", "--short", "-uall"]);
-  return output.split(/\r?\n/)
+function collectDiff(baseline) {
+  const committedDiff = safeGit(["diff", "--binary", `${baseline.head}..HEAD`]);
+  const workingDiff = safeGit(["diff", "--binary"]);
+  const stagedDiff = safeGit(["diff", "--cached", "--binary"]);
+  return [committedDiff, stagedDiff, workingDiff].filter(Boolean).join("\n");
+}
+
+function parseChangedFiles(baseline) {
+  const fromCommits = parseNameStatus(safeGit(["diff", "--name-status", `${baseline.head}..HEAD`]));
+  const fromStatus = git(["status", "--short", "-uall"]).split(/\r?\n/)
     .filter(Boolean)
     .map((line) => {
       const status = line.slice(0, 2).trim() || "??";
@@ -346,12 +365,34 @@ function parseChangedFiles() {
       const renamed = rawPath.includes(" -> ");
       const filePath = renamed ? rawPath.split(" -> ").pop() : rawPath;
       return { status, path: normalizePath(filePath) };
-    })
-    .filter((item) => !isOwnArtifact(item.path));
+    });
+  return mergeChangedFiles([...fromCommits, ...fromStatus]).filter((item) => !isOwnArtifact(item.path));
 }
 
-function parseNumstat() {
-  const output = safeGit(["diff", "--numstat"]);
+function parseNameStatus(output) {
+  return output.split(/\r?\n/).filter(Boolean).map((line) => {
+    const parts = line.split(/\t/);
+    const status = parts[0];
+    const filePath = parts[parts.length - 1];
+    return { status, path: normalizePath(filePath || "") };
+  });
+}
+
+function mergeChangedFiles(items) {
+  const map = new Map();
+  for (const item of items) {
+    if (!item.path) continue;
+    map.set(item.path, item);
+  }
+  return [...map.values()];
+}
+
+function parseNumstat(baseline) {
+  const output = [
+    safeGit(["diff", "--numstat", `${baseline.head}..HEAD`]),
+    safeGit(["diff", "--cached", "--numstat"]),
+    safeGit(["diff", "--numstat"])
+  ].filter(Boolean).join("\n");
   return output.split(/\r?\n/).filter(Boolean).map((line) => {
     const [added, deleted, file] = line.split(/\t/);
     return {
@@ -360,6 +401,11 @@ function parseNumstat() {
       deleted: /^\d+$/.test(deleted) ? Number(deleted) : 0
     };
   }).filter((item) => !isOwnArtifact(item.path));
+}
+
+function listCommitsSince(head) {
+  const output = safeGit(["log", "--oneline", `${head}..HEAD`]);
+  return output.split(/\r?\n/).filter(Boolean);
 }
 
 function listGitFiles() {
