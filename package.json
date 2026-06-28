@@ -1,0 +1,25 @@
+{
+  "name": "agent-change-auditor",
+  "version": "0.1.0",
+  "description": "Evidence-based audit reports for AI coding agent changes.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "agent-change-auditor": "./bin/agent-change-auditor.cjs",
+    "aca": "./bin/agent-change-auditor.cjs"
+  },
+  "scripts": {
+    "check": "node scripts/check-syntax.cjs && node scripts/smoke-test.cjs"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "audit",
+    "code-review",
+    "git",
+    "codex"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
