@@ -346,7 +346,8 @@ function parseChangedFiles() {
       const renamed = rawPath.includes(" -> ");
       const filePath = renamed ? rawPath.split(" -> ").pop() : rawPath;
       return { status, path: normalizePath(filePath) };
-    });
+    })
+    .filter((item) => !isOwnArtifact(item.path));
 }
 
 function parseNumstat() {
@@ -358,7 +359,7 @@ function parseNumstat() {
       added: /^\d+$/.test(added) ? Number(added) : 0,
       deleted: /^\d+$/.test(deleted) ? Number(deleted) : 0
     };
-  });
+  }).filter((item) => !isOwnArtifact(item.path));
 }
 
 function listGitFiles() {
@@ -469,6 +470,11 @@ function readPackageVersion() {
 
 function normalizePath(file) {
   return file.replace(/\\/g, "/").replace(/^"|"$/g, "");
+}
+
+function isOwnArtifact(file) {
+  const normalized = normalizePath(file);
+  return normalized === REPORT_FILE || normalized.startsWith(`${AUDIT_DIR}/`);
 }
 
 function highestRisk(risks) {

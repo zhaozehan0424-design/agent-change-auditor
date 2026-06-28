@@ -44,5 +44,9 @@ if (!report.includes("Authentication or authorization logic changed")) {
 if (!report.includes("jsonwebtoken")) {
   throw new Error("Expected dependency change in report");
 }
+const changedFilesSection = report.split("## Changed Files")[1].split("## Dependency Changes")[0];
+if (changedFilesSection.includes(".agent-auditor")) {
+  throw new Error("Own audit artifacts should not appear as changed files");
+}
 
 console.log("smoke_ok=true");

@@ -64,6 +64,9 @@ AI_CHANGE_AUDIT.md
 .agent-auditor/commands.log
 ```
 
+The tool excludes its own `.agent-auditor/` directory and `AI_CHANGE_AUDIT.md`
+from the changed-file risk table, so the report focuses on your project changes.
+
 You can also record commands as you go:
 
 ```powershell
