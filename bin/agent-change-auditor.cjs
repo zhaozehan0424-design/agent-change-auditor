@@ -40,7 +40,7 @@ function main() {
       return;
     }
     if (command === "start") return start(args);
-    if (command === "finish") return finish(args);
+    if (command === "finish" || command === "stop") return finish(args);
     if (command === "report") return report(args);
     if (command === "run") return runCommand(args);
     throw new Error(`Unknown command: ${command}`);
@@ -56,13 +56,15 @@ function printHelp() {
 Usage:
   aca start [--label "task name"]
   aca run -- <command...>
+  aca stop [--test "npm test"] [--build "npm run build"]
   aca finish [--test "npm test"] [--build "npm run build"]
   aca report
 
 What it does:
   start   Records the current git state as a baseline.
   run     Runs a command and appends stdout/stderr to the audit log.
-  finish  Collects git diff, command results, findings, and writes AI_CHANGE_AUDIT.md.
+  stop    Manually ends the audit window and writes AI_CHANGE_AUDIT.md.
+  finish  Alias for stop.
   report  Regenerates AI_CHANGE_AUDIT.md from the latest findings.
 `);
 }
@@ -147,7 +149,7 @@ function finish(args) {
 
 function report() {
   const findingsPath = auditPath(FINDINGS_FILE);
-  if (!fs.existsSync(findingsPath)) throw new Error("No findings found. Run `aca finish` first.");
+  if (!fs.existsSync(findingsPath)) throw new Error("No findings found. Run `aca stop` first.");
   const findings = JSON.parse(fs.readFileSync(findingsPath, "utf8"));
   fs.writeFileSync(REPORT_FILE, renderReport(findings));
   console.log(`report_written=${path.resolve(REPORT_FILE)}`);
@@ -178,7 +180,7 @@ function analyze(input) {
   if (dependencyChanges.added.length || dependencyChanges.removed.length) recommendations.push("Review dependency additions/removals and lockfile churn.");
   if (failedCommands.length) recommendations.push("Re-run failed commands after fixes and attach the output to the review.");
   if (sensitiveHits.length) recommendations.push("Rotate any exposed credentials and remove secrets from git history if real values were committed.");
-  if (!commands.length) recommendations.push("Run tests/build through `aca run -- ...` or `aca finish --test ... --build ...` for stronger evidence.");
+  if (!commands.length) recommendations.push("Run tests/build through `aca run -- ...` or `aca stop --test ... --build ...` for stronger evidence.");
 
   return {
     generatedAt: new Date().toISOString(),

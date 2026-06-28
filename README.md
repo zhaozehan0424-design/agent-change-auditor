@@ -7,6 +7,10 @@ a human-readable review trail afterwards. It records a baseline before the agent
 works, then generates an audit report from git diff, command output, path rules,
 dependency changes, and redaction checks.
 
+The audit window is deliberately manual: you decide when to start and when to
+stop. The tool does not guess that the agent is "done"; it records the evidence
+between two explicit checkpoints.
+
 It does not need an AI model. The first version is intentionally deterministic:
 AI can be added later as an optional explanation layer, but the evidence comes
 from git and command logs.
@@ -45,8 +49,11 @@ aca start --label "refactor login flow"
 Let your coding agent work, then record checks and generate the report:
 
 ```powershell
-aca finish --test "npm test" --build "npm run build"
+aca stop --test "npm test" --build "npm run build"
 ```
+
+`aca finish` is kept as an alias for `aca stop`, but `stop` better reflects the
+manual "end the audit now" workflow.
 
 Artifacts:
 

@@ -1,13 +1,13 @@
 # AI Change Audit
 
-Generated: 2026-06-28T11:40:59.520Z
-Task: fix duplicate command reporting
-Baseline: 5945e8bd65206c754a08c18d533691cc1044eb5b (main)
+Generated: 2026-06-28T11:51:42.229Z
+Task: add manual stop checkpoint
+Baseline: 4510cb19c50b5e764b59afe19706b7f0ea490862 (main)
 
 ## Summary
 
-- Changed files: 6
-- High-risk files: 1
+- Changed files: 5
+- High-risk files: 0
 - Medium-risk files: 0
 - Failed commands: 0
 - Potential secret findings: 0
@@ -15,18 +15,17 @@ Baseline: 5945e8bd65206c754a08c18d533691cc1044eb5b (main)
 
 ## Review Focus
 
-- Review high-risk files manually before merging or deploying.
+- No specific review focus detected.
 
 ## Changed Files
 
 | Risk | Status | File | Reason |
 | --- | --- | --- | --- |
+| LOW | M | `CHANGELOG.md` | Documentation changed. |
 | LOW | M | `README.md` | Documentation changed. |
 | LOW | M | `bin/agent-change-auditor.cjs` | General source or asset change. |
-| HIGH | ?? | `.github/workflows/ci.yml` | CI/CD workflow changed. |
-| LOW | ?? | `AI_CHANGE_AUDIT.md` | General source or asset change. |
-| LOW | ?? | `CHANGELOG.md` | Documentation changed. |
-| LOW | ?? | `MAINTENANCE.md` | Documentation changed. |
+| LOW | M | `examples/sample-report.md` | General source or asset change. |
+| LOW | M | `scripts/smoke-test.cjs` | General source or asset change. |
 
 ## Dependency Changes
 
@@ -36,9 +35,7 @@ No dependency additions or removals detected in package manifests.
 
 | Exit | Command | Started |
 | --- | --- | --- |
-| 0 | `npm run check` | 2026-06-28T11:39:22.201Z |
-| 0 | `npm run check` | 2026-06-28T11:40:23.125Z |
-| 0 | `npm run check` | 2026-06-28T11:40:57.605Z |
+| 0 | `npm run check` | 2026-06-28T11:51:40.258Z |
 
 ## Potential Secrets
 

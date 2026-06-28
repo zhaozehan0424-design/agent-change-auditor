@@ -35,7 +35,7 @@ fs.writeFileSync(path.join(temp, "src", "auth", "session.js"), "module.exports =
 const packageJson = JSON.parse(fs.readFileSync(path.join(temp, "package.json"), "utf8"));
 packageJson.dependencies.jsonwebtoken = "^9.0.0";
 fs.writeFileSync(path.join(temp, "package.json"), JSON.stringify(packageJson, null, 2));
-run(process.execPath, [cli, "finish", "--test", "node -e \"process.exit(0)\""]);
+run(process.execPath, [cli, "stop", "--test", "node -e \"process.exit(0)\""]);
 
 const report = fs.readFileSync(path.join(temp, "AI_CHANGE_AUDIT.md"), "utf8");
 if (!report.includes("Authentication or authorization logic changed")) {

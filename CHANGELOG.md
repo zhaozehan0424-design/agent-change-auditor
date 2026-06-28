@@ -4,7 +4,7 @@
 
 Initial MVP.
 
-- Added `start`, `run`, `finish`, and `report` commands.
+- Added `start`, `run`, `stop`/`finish`, and `report` commands.
 - Added git baseline capture and redacted diff artifacts.
 - Added deterministic risk rules for auth, deployment, CI, MCP, dependency, backend, and documentation changes.
 - Added command recording and markdown audit report generation.
