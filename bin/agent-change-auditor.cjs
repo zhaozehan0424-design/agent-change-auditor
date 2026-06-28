@@ -123,9 +123,8 @@ function finish(args) {
   ensureAuditDir();
   const opts = parseOptions(args);
   const baseline = readBaseline();
-  const commandResults = [];
-  if (opts.test) commandResults.push(runAndRecord(opts.test, "test"));
-  if (opts.build) commandResults.push(runAndRecord(opts.build, "build"));
+  if (opts.test) runAndRecord(opts.test, "test");
+  if (opts.build) runAndRecord(opts.build, "build");
 
   const diffRaw = git(["diff", "--binary"]);
   const diff = redact(diffRaw);
@@ -138,7 +137,7 @@ function finish(args) {
     changedFiles,
     stats,
     diff,
-    commandResults
+    commandResults: []
   });
   fs.writeFileSync(auditPath(FINDINGS_FILE), JSON.stringify(findings, null, 2));
   fs.writeFileSync(REPORT_FILE, renderReport(findings));
@@ -336,7 +335,7 @@ function redact(text) {
 }
 
 function parseChangedFiles() {
-  const output = git(["status", "--short"]);
+  const output = git(["status", "--short", "-uall"]);
   return output.split(/\r?\n/)
     .filter(Boolean)
     .map((line) => {

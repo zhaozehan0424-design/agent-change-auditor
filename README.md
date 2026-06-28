@@ -24,6 +24,16 @@ Agent Change Auditor records the facts:
 - whether the diff appears to contain secrets
 - where a human should focus review
 
+## Good Fit
+
+Use this when an AI coding agent makes non-trivial changes and you want a review
+artifact before committing, merging, or deploying. It is especially useful for
+changes that touch auth, dependencies, CI, deployment config, MCP config, or
+server-side code.
+
+It is not meant to replace human review, tests, or full security scanning. It is
+the small independent record that helps a reviewer know where to look first.
+
 ## Quick Start
 
 From inside a git repository:
