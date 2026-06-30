@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.2.0 - 2026-06-30
+
+Usability release.
+
+- Added `aca init` for local project setup and initial git snapshots.
+- Added `aca claim` to compare an agent's self-reported changes with actual changed files.
+- Added `--lang en|zh-CN|both` report output.
+- Added committed-change tracking from baseline to current `HEAD`.
+- Ignored the auditor's own artifacts in changed-file risk tables.
+
 ## v0.1.0 - 2026-06-28
 
 Initial MVP.

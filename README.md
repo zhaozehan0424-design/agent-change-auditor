@@ -55,6 +55,53 @@ aca stop --test "npm test" --build "npm run build"
 `aca finish` is kept as an alias for `aca stop`, but `stop` better reflects the
 manual "end the audit now" workflow.
 
+Generate Chinese, English, or both report variants:
+
+```powershell
+aca stop --lang zh-CN
+aca stop --lang en
+aca stop --lang both
+```
+
+With `--lang both`, the tool writes:
+
+```text
+AI_CHANGE_AUDIT.md
+AI_CHANGE_AUDIT.en.md
+AI_CHANGE_AUDIT.zh-CN.md
+```
+
+## Local Project Setup
+
+If your project is just a local folder and not a git repository yet, run:
+
+```powershell
+aca init
+```
+
+This initializes a local git repository, adds auditor artifacts to `.gitignore`,
+and creates an initial snapshot commit. It does not publish anything to GitHub.
+
+If you only want to initialize git and write `.gitignore` entries without
+creating a snapshot commit:
+
+```powershell
+aca init --no-snapshot
+```
+
+## Agent Claim Check
+
+If the agent says what it changed, record that statement before stopping the
+audit:
+
+```powershell
+aca claim "I only changed README.md"
+aca stop --lang both
+```
+
+The report will compare that claim with actual changed files and highlight files
+that changed but were not mentioned by the agent.
+
 Artifacts:
 
 ```text

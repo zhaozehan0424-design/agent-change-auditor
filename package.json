@@ -1,6 +1,6 @@
 {
   "name": "agent-change-auditor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Evidence-based audit reports for AI coding agent changes.",
   "license": "MIT",
   "type": "commonjs",
