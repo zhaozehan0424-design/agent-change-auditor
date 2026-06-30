@@ -5,7 +5,8 @@ const cp = require("node:child_process");
 const files = [
   "bin/agent-change-auditor.cjs",
   "scripts/check-syntax.cjs",
-  "scripts/smoke-test.cjs"
+  "scripts/smoke-test.cjs",
+  "scripts/check-public-repo.cjs"
 ];
 
 for (const file of files) {

@@ -1,6 +1,6 @@
 {
   "name": "agent-change-auditor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Evidence-based audit reports for AI coding agent changes.",
   "license": "MIT",
   "type": "commonjs",
@@ -9,7 +9,7 @@
     "aca": "./bin/agent-change-auditor.cjs"
   },
   "scripts": {
-    "check": "node scripts/check-syntax.cjs && node scripts/smoke-test.cjs"
+    "check": "node scripts/check-syntax.cjs && node scripts/check-public-repo.cjs && node scripts/smoke-test.cjs"
   },
   "keywords": [
     "ai",
@@ -17,9 +17,20 @@
     "audit",
     "code-review",
     "git",
-    "codex"
+    "codex",
+    "audit-trail",
+    "ai-agents",
+    "developer-tools"
   ],
   "engines": {
     "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaozehan0424-design/agent-change-auditor.git"
+  },
+  "homepage": "https://github.com/zhaozehan0424-design/agent-change-auditor#readme",
+  "bugs": {
+    "url": "https://github.com/zhaozehan0424-design/agent-change-auditor/issues"
   }
 }

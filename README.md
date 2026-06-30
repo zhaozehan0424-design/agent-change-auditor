@@ -1,4 +1,9 @@
 # Agent Change Auditor
+[![CI](https://github.com/zhaozehan0424-design/agent-change-auditor/actions/workflows/ci.yml/badge.svg)](https://github.com/zhaozehan0424-design/agent-change-auditor/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[Repository status](./REPOSITORY_STATUS.md) records maintenance checks and release-readiness notes.
+
+
 
 Evidence-based audit reports for AI coding agent changes.
 
@@ -141,6 +146,10 @@ keys, GitHub tokens, bearer tokens, private key blocks, and email addresses.
 This tool is not a replacement for full secret scanning. It is a local audit
 trail for AI-assisted code changes.
 
+## Desktop Prototype
+
+A lightweight Windows desktop wrapper is published separately as [`agent-change-auditor-desktop`](https://github.com/zhaozehan0424-design/agent-change-auditor-desktop). The CLI remains the core audit engine.
+
 ## Status
 
 This is an MVP. Good next steps:
@@ -150,6 +159,10 @@ This is an MVP. Good next steps:
 - add configurable rules
 - add framework-specific rules for Next.js, Vercel, MCP, and Python projects
 - add optional model-generated explanations from sanitized findings
+
+## Self-Audit Evidence
+
+This repository dogfoods the tool. The latest local self-audit report is stored under [`docs/self-audit/AI_CHANGE_AUDIT.md`](./docs/self-audit/AI_CHANGE_AUDIT.md).
 
 ## License
 

@@ -23,3 +23,10 @@ When adding a new risk rule:
 Optional AI summaries can be added later, but they must read sanitized findings
 instead of raw files or unredacted command output. The deterministic report
 should remain useful without any model call.
+## 2026-06-30 - Publication maintenance
+
+- Ran `npm run check` locally.
+- Added repository status, security, contribution, issue template, PR template, and public-repo checks.
+- Moved generated self-audit reports to `docs/self-audit/`.
+- Prepared the repository for GitHub publication as `zhaozehan0424-design/agent-change-auditor`.
+

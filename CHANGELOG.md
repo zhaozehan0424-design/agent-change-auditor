@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.2.1 - 2026-06-30
+
+Repository publication and maintenance pass.
+
+- Added public maintenance, security, contribution, issue-template, PR-template, and repository-status files.
+- Added a public-repository verification script to CI.
+- Moved self-audit reports into `docs/self-audit/` and ignored future generated audit reports at the repository root.
+- Added GitHub repository metadata to `package.json` and README badges.
+
 ## v0.2.0 - 2026-06-30
 
 Usability release.

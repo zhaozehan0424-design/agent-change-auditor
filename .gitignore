@@ -5,3 +5,5 @@ npm-debug.log*
 .env.*
 !.env.example
 *.local
+AI_CHANGE_AUDIT*.md
+dist/
